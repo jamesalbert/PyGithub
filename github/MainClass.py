@@ -845,6 +845,9 @@ class GithubIntegration:
             },
             json=body,
         )
+        
+        decoded = jwt.decode(j, options={"verify_signature": False})
+        print(f"decoded: {decoded}")
 
         print(installation_id)
         print(response.status_code)
