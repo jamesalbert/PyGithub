@@ -845,6 +845,7 @@ class GithubIntegration:
             json=body,
         )
 
+        print(installation_id)
         print(response.status_code)
         print(response.text)
         print(response.json())
