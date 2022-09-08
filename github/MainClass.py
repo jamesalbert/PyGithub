@@ -840,6 +840,9 @@ class GithubIntegration:
             json=body,
         )
 
+        print(response.status_code)
+        print(response.text)
+        print(response.json())
         if response.status_code == 201:
             return InstallationAuthorization.InstallationAuthorization(
                 requester=None,  # not required, this is a NonCompletableGithubObject
