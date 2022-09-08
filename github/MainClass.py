@@ -835,6 +835,7 @@ class GithubIntegration:
             
         j = self.create_jwt()
         print(f"jwt: {j}")
+        print(f"base_url: {self.base_url}")
         response = requests.post(
             f"{self.base_url}/app/installations/{installation_id}/access_tokens",
             headers={
