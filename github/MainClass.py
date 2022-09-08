@@ -810,12 +810,14 @@ class GithubIntegration:
         :param expiration: int
         :return string:
         """
+
         now = int(time.time())
         payload = {"iat": now, "exp": now + expiration, "iss": self.integration_id}
         encrypted = jwt.encode(payload, key=self.private_key, algorithm="RS256")
-
         if isinstance(encrypted, bytes):
             encrypted = encrypted.decode("utf-8")
+        print(f"creating jwt: now: '{now}', payload: '{payload}', encrypted: '{encrypted}'")
+        print(f"new encrypted: '{encrypted}'")
 
         return encrypted
 
@@ -830,10 +832,13 @@ class GithubIntegration:
         body = {}
         if user_id:
             body = {"user_id": user_id}
+            
+        j = self.create_jwt()
+        print(f"jwt: {j}")
         response = requests.post(
             f"{self.base_url}/app/installations/{installation_id}/access_tokens",
             headers={
-                "Authorization": f"Bearer {self.create_jwt()}",
+                "Authorization": f"Bearer {j}",
                 "Accept": Consts.mediaTypeIntegrationPreview,
                 "User-Agent": "PyGithub/Python",
             },
